@@ -1,5 +1,4 @@
 import {
-  Box,
   Button,
   FormControl,
   Input,
@@ -8,8 +7,8 @@ import {
   Select,
   SelectChangeEvent,
   TextField,
-  TextareaAutosize,
   Typography,
+  Container,
 } from "@mui/material";
 
 import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
@@ -19,6 +18,7 @@ import { RootState } from "../../../app/store";
 import axios from "axios";
 import { addLeave, updateLeave } from "../../../features/LeaveSlicer";
 import moment from "moment";
+import { Box } from "@mui/material";
 
 interface LeaveData {
   fullName: string;
@@ -146,111 +146,163 @@ const AddLeave: React.FC = () => {
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
-        <Typography
-          sx={{ marginTop: "2rem", textAlign: "center" }}
-          variant="h5"
-        >
-          {" "}
-          {leave._id ? "Update Leave" : "Apply for leave"}
-        </Typography>
-        <Box
-          sx={{
-            marginTop: "2rem",
-            display: "flex",
-            justifyContent: "space-evenly",
-            alignItems: "center",
-            gap: "2rem",
-          }}
-        >
-          <TextField
-            id="filled-basic"
-            label="Name"
-            variant="standard"
-            value={inputData.fullName}
-            onChange={handleName}
-          />
-          <FormControl variant="standard" sx={{ m: 3, minWidth: 200 }}>
-            <InputLabel id="demo-simple-select-label">Leave Type</InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              label="Age"
-              value={inputData.leaveType}
-              onChange={handleLeaveType}
+      <Typography
+        sx={{ marginTop: "2rem", textAlign: "center", color: "#1565c0" }}
+        variant="h5"
+      >
+        {" "}
+        {leave._id ? "Update Leave" : "Apply for leave"}
+      </Typography>
+      <Container sx={{ bgcolor: "#e3f2ff ", height: "70vh", width: "50vw" }}>
+        <form onSubmit={handleSubmit}>
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              marginTop: "2rem",
+            }}
+          >
+            <Box
+              component="form"
+              sx={{
+                "& .MuiTextField-root": {
+                  m: 1,
+                  width: "25ch",
+                  marginTop: "2rem",
+                },
+              }}
+              noValidate
+              autoComplete="off"
             >
-              <MenuItem value={"Sick Leave"}>Sick Leave</MenuItem>
-              <MenuItem value={"Personal Leave"}>Personal Leave</MenuItem>
-              <MenuItem value={"Paid Leave"}>Paid Leave</MenuItem>
-            </Select>
-          </FormControl>
-          From
-          <Input
-            value={moment(inputData.fromDate).format("YYYY-MM-DD")}
-            onChange={handleStartDate}
-            type="date"
-            slotProps={{
-              input: {
-                min: moment().format("YYYY-MM-DD"),
-              },
-            }}
-          />
-          TO
-          <Input
-            value={moment(inputData.toDate).format("YYYY-MM-DD")}
-            onChange={handleLeaveEndDate}
-            type="date"
-            slotProps={{
-              input: {},
-            }}
-          />
-          <TextField
-            id="filled-basic"
-            label="Leave Days"
-            variant="standard"
-            type="number"
-            value={inputData.leaveDays}
-            onChange={handleTotalLeaveDays}
-          />
-          <br />
-        </Box>
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <Box>
-            {" "}
-            <TextareaAutosize
-              value={inputData.description}
-              onChange={handleLeaveDetails}
-              placeholder="Leave details "
-              minRows="25"
-              style={{ width: "25rem", marginTop: "1rem" }}
-            />
-            <br />
-            <Box sx={{ display: "flex", gap: "2rem", marginLeft: "12rem" }}>
-              <Button
-                variant="contained"
-                sx={{ marginTop: "1rem" }}
-                type="submit"
-              >
-                {leave._id ? "Update" : "Submit"}
-              </Button>
-              <Button
-                variant="contained"
-                sx={{ marginTop: "1rem" }}
-                onClick={handleCancel}
-              >
-                Cancel
-              </Button>
+              <div>
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: "4rem",
+                  }}
+                >
+                  <TextField
+                    id="filled-basic"
+                    label="Name"
+                    variant="standard"
+                    value={inputData.fullName}
+                    onChange={handleName}
+                  />
+                  <FormControl
+                    variant="standard"
+                    sx={{ m: 1, minWidth: 200, marginTop: "2rem" }}
+                  >
+                    <InputLabel id="demo-simple-select-label">
+                      Leave Type
+                    </InputLabel>
+                    <Select
+                      labelId="demo-simple-select-label"
+                      id="demo-simple-select"
+                      label="Age"
+                      value={inputData.leaveType}
+                      onChange={handleLeaveType}
+                    >
+                      <MenuItem value={"Sick Leave"}>Sick Leave</MenuItem>
+                      <MenuItem value={"Personal Leave"}>
+                        Personal Leave
+                      </MenuItem>
+                      <MenuItem value={"Paid Leave"}>Paid Leave</MenuItem>
+                    </Select>
+                  </FormControl>
+                </Box>
+              </div>
+              <div>
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: "4rem",
+                    marginTop: "3rem",
+                  }}
+                >
+                  From :
+                  <Input
+                    value={moment(inputData.fromDate).format("YYYY-MM-DD")}
+                    onChange={handleStartDate}
+                    type="date"
+                    slotProps={{
+                      input: {
+                        min: moment().format("YYYY-MM-DD"),
+                      },
+                    }}
+                  />
+                  TO :
+                  <Input
+                    value={moment(inputData.toDate).format("YYYY-MM-DD")}
+                    onChange={handleLeaveEndDate}
+                    type="date"
+                    slotProps={{
+                      input: {},
+                    }}
+                  />
+                </Box>
+              </div>
+              <div>
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: "4rem",
+                  }}
+                >
+                  <TextField
+                    id="filled-basic"
+                    label="Total Leave Days"
+                    variant="standard"
+                    type="number"
+                    value={inputData.leaveDays}
+                    onChange={handleTotalLeaveDays}
+                  />
+                  <TextField
+                    id="outlined-multiline-static"
+                    label="Description"
+                    multiline
+                    rows={8}
+                    value={inputData.description}
+                    onChange={handleLeaveDetails}
+                  />
+                </Box>
+              </div>
             </Box>
           </Box>
-        </Box>
-      </form>
+          <br />
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: "1rem",
+            }}
+          >
+            <Button
+              variant="contained"
+              sx={{ marginTop: "1rem" }}
+              type="submit"
+            >
+              {leave._id ? "Update" : "Submit"}
+            </Button>
+
+            <Button
+              variant="contained"
+              color="error"
+              sx={{ marginTop: "1rem" }}
+              onClick={handleCancel}
+            >
+              Cancel
+            </Button>
+          </Box>
+        </form>
+      </Container>
     </>
   );
 };

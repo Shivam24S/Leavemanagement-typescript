@@ -1,4 +1,4 @@
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, Typography, Container } from "@mui/material";
 
 import { Link } from "react-router-dom";
 import LeaveList from "./LeaveList";
@@ -6,14 +6,19 @@ import LeaveList from "./LeaveList";
 const Leave: React.FC = () => {
   return (
     <>
+      <Typography
+        variant="h4"
+        sx={{
+          textAlign: "center",
+          marginTop: "2rem",
+          color: "#1565c0",
+        }}
+      >
+        {" "}
+        Leave DashBoard
+      </Typography>
+
       <Box>
-        <Typography
-          variant="h4"
-          sx={{ textAlign: "center", marginTop: "2rem" }}
-        >
-          {" "}
-          Welcome to Leave DashBoard
-        </Typography>
         <Box
           sx={{
             display: "flex",
@@ -25,21 +30,16 @@ const Leave: React.FC = () => {
           <Link to="/add-leave">
             <Button variant="outlined"> Apply For Leave</Button>{" "}
           </Link>
-          {/* <Link to="/leave-list">
-            
-          </Link> */}
           <Button variant="contained"> Leave List</Button>
-          {/* <Link to="/leave-status">
-            {" "}
-            <Button variant="outlined"> Leave status</Button>
-          </Link> */}
-          <Link to="/leave-balance">
-            <Button variant="outlined"> Leave balance</Button>
+
+          <Link to="/leave-request">
+            <Button variant="outlined"> Requsted-leave</Button>
           </Link>
         </Box>
       </Box>
-
-      <LeaveList />
+      <Container sx={{ bgcolor: "#e3f2ff", height: "70vh" }}>
+        <LeaveList />
+      </Container>
     </>
   );
 };

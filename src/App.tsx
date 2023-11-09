@@ -1,7 +1,6 @@
-import React from "react";
 import RouteList from "./routes";
 
-// import "./App.css";
+import "./App.css";
 
 function App() {
   return (

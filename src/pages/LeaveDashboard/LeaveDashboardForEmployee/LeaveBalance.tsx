@@ -63,6 +63,10 @@ const LeaveBalance: React.FC = () => {
           <br />
 
           <h4>You have used : {leavebalance.used} </h4>
+
+          <br />
+
+          <h4>You have left : {leavebalance.balance} </h4>
         </Box>
       </Box>
     </>

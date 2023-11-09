@@ -52,6 +52,10 @@ const LeaveBalance: React.FC = () => {
     used: "",
   });
 
+  // const totalLeaves = () =>{
+
+  // }
+
   return (
     <>
       <Box

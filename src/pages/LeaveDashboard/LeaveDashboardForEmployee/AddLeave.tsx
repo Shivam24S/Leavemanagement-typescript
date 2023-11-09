@@ -144,11 +144,6 @@ const AddLeave: React.FC = () => {
     });
   };
 
-  console.log(leave);
-
-  console.log(inputData.fromDate);
-  console.log(inputData.toDate);
-
   return (
     <>
       <form onSubmit={handleSubmit}>

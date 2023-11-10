@@ -19,6 +19,8 @@ import axios from "axios";
 import { addLeave, updateLeave } from "../../../features/LeaveSlicer";
 import moment from "moment";
 import { Box } from "@mui/material";
+import { Link } from "react-router-dom";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 interface LeaveData {
   fullName: string;
@@ -30,6 +32,10 @@ interface LeaveData {
 }
 
 const AddLeave: React.FC = () => {
+  const dispatch = useDispatch();
+
+  const leave: any = useSelector((state: RootState) => state.leave.updateLeave);
+
   const [inputData, setInputData] = useState<LeaveData>({
     fullName: "",
     leaveType: "",
@@ -38,22 +44,6 @@ const AddLeave: React.FC = () => {
     leaveDays: "",
     description: "",
   });
-
-  useEffect(() => {
-    if (leave._id) {
-      const formattedFromDate = moment(leave.fromDate).format("YYYY-MM-DD");
-      const formattedToDate = moment(leave.toDate).format("YYYY-MM-DD");
-      setInputData({
-        ...leave,
-        fromDate: formattedFromDate,
-        toDate: formattedToDate,
-      });
-    }
-  }, []);
-
-  const dispatch = useDispatch();
-
-  const leave: any = useSelector((state: RootState) => state.leave.updateLeave);
 
   const handleName = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputData({ ...inputData, fullName: e.target.value });
@@ -76,10 +66,6 @@ const AddLeave: React.FC = () => {
 
     handleTotalLeaveDays();
   };
-
-  useEffect(() => {
-    handleTotalLeaveDays();
-  }, [inputData.fromDate, inputData.toDate]);
 
   const handleLeaveDetails = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setInputData({ ...inputData, description: e.target.value });
@@ -107,10 +93,11 @@ const AddLeave: React.FC = () => {
       let method = "";
 
       if (leave._id) {
+        // apiUrl = process.env.REACT_APP_PATCH_API ?? "";
         apiUrl = "http://127.0.0.1:5000/api/updateLeave";
         method = "PATCH";
       } else {
-        apiUrl = "http://127.0.0.1:5000/api/applyForLeave";
+        apiUrl = process.env.REACT_APP_POST_API ?? "";
         method = "POST";
       }
 
@@ -144,6 +131,36 @@ const AddLeave: React.FC = () => {
     });
   };
 
+  useEffect(() => {
+    handleTotalLeaveDays();
+  }, [inputData.fromDate, inputData.toDate]);
+
+  useEffect(() => {
+    if (leave._id) {
+      const formattedFromDate = moment(leave.fromDate).format("YYYY-MM-DD");
+      const formattedToDate = moment(leave.toDate).format("YYYY-MM-DD");
+      setInputData((prevInputData) => ({
+        ...prevInputData,
+        ...leave,
+        fromDate: formattedFromDate,
+        toDate: formattedToDate,
+      }));
+
+      console.log("updating");
+    }
+    return () => {
+      console.log("adding leave");
+      setInputData({
+        fullName: "",
+        leaveType: "",
+        fromDate: "",
+        toDate: "",
+        leaveDays: "",
+        description: "",
+      });
+    };
+  }, [leave]);
+
   return (
     <>
       <Typography
@@ -154,6 +171,17 @@ const AddLeave: React.FC = () => {
         {leave._id ? "Update Leave" : "Apply for leave"}
       </Typography>
       <Container sx={{ bgcolor: "#e3f2ff ", height: "70vh", width: "50vw" }}>
+        <Link to="/">
+          <ArrowBackIcon
+            sx={{
+              fontSize: "2rem",
+              marginTop: "1rem",
+              cursor: "pointer",
+              color: "black",
+            }}
+          />
+        </Link>
+
         <form onSubmit={handleSubmit}>
           <Box
             sx={{
@@ -267,7 +295,7 @@ const AddLeave: React.FC = () => {
                     id="outlined-multiline-static"
                     label="Description"
                     multiline
-                    rows={8}
+                    rows={3}
                     value={inputData.description}
                     onChange={handleLeaveDetails}
                   />

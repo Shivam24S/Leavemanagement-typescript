@@ -12,13 +12,15 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import CancelIcon from "@mui/icons-material/Cancel";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import { Link } from "react-router-dom";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 const LeaveRequest = () => {
   const [leaveListData, setLeaveListData] = useState<any>([]);
 
   const fetchLeaveList = async () => {
     try {
-      const response = await axios.get("http://127.0.0.1:5000/api/leaveList");
+      const response = await axios.get(process.env.REACT_APP_GET_API ?? "");
       setLeaveListData(response.data.data);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -46,7 +48,7 @@ const LeaveRequest = () => {
       };
 
       await axios.patch(
-        "http://127.0.0.1:5000/api/updateLeaveStatus",
+        process.env.REACT_APP_PATCH_STATUS_API ?? "",
         approveData
       );
 
@@ -69,7 +71,7 @@ const LeaveRequest = () => {
       };
 
       await axios.patch(
-        "http://127.0.0.1:5000/api/updateLeaveStatus",
+        process.env.REACT_APP_PATCH_STATUS_API ?? "",
         rejectData
       );
 
@@ -101,7 +103,17 @@ const LeaveRequest = () => {
 
   return (
     <>
-      <Container sx={{ bgcolor: "#e3f2ff", height: "80vh" }}>
+      <Container sx={{ bgcolor: "#e3f2ff", height: "80vh", marginTop: "3rem" }}>
+        <Link to="/">
+          <ArrowBackIcon
+            sx={{
+              fontSize: "2rem",
+              marginTop: "1rem",
+              cursor: "pointer",
+              color: "black",
+            }}
+          />
+        </Link>
         <Typography
           variant="h5"
           sx={{ marginTop: "3rem", textAlign: "center", color: "#1565c0" }}
@@ -162,11 +174,13 @@ const LeaveRequest = () => {
                       <CancelIcon
                         color="error"
                         onClick={() => handleReject(data._id)}
+                        sx={{ cursor: "pointer" }}
                       ></CancelIcon>
                     }
                     <CheckCircleIcon
                       color="success"
                       onClick={() => handleApprove(data._id)}
+                      sx={{ cursor: "pointer" }}
                     ></CheckCircleIcon>
                   </StyledTableCell>
                 </StyledTableRow>

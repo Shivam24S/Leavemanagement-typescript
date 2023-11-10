@@ -37,7 +37,7 @@ const Leave: React.FC = () => {
           </Link>
         </Box>
       </Box>
-      <Container sx={{ bgcolor: "#e3f2ff", height: "70vh" }}>
+      <Container sx={{ bgcolor: "#e3f2ff", marginTop: "2rem" }}>
         <LeaveList />
       </Container>
     </>

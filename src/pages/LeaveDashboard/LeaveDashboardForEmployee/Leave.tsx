@@ -33,7 +33,7 @@ const Leave: React.FC = () => {
           <Button variant="contained"> Leave List</Button>
 
           <Link to="/leave-request">
-            <Button variant="outlined"> Requsted-leave</Button>
+            <Button variant="outlined"> Requested-leave</Button>
           </Link>
         </Box>
       </Box>

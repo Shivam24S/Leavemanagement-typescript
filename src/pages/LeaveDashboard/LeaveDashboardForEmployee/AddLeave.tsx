@@ -78,7 +78,7 @@ const AddLeave: React.FC = () => {
       const duration = moment.duration(end.diff(start));
       const days = duration.asDays();
 
-      console.log(days);
+      // console.log(days);
 
       setInputData({ ...inputData, leaveDays: days });
     }
